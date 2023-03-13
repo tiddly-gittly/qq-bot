@@ -14,6 +14,10 @@ const wikiDirs = wikiNames.map((name) => ({ name, wikiDir: path.resolve(userHome
 
 module.exports = {
   apps: [
+    {
+      name: 'qq-bot',
+      script: 'cd ~/qq-bot && pnpm start',
+    },
     ...wikiDirs.flatMap(({ name, wikiDir }, index) => [
       {
         name,
