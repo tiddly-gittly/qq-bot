@@ -15,7 +15,7 @@ const buildWikiFilter = function (query) {
 function buildAnswerLineFromSearchResultItem(item): string {
   const title = item.title;
   const creator = item.creator ? ` @${item.creator}` : '';
-  const modifier = item.modifier ? ` @${item.modifier}` : '';
+  const modifier = item.modifier && item.modifier !== item.creator ? ` @${item.modifier}` : '';
   const tags = (item.tags ?? '')
     .split(' ')
     .map((tag) => ` #${tag}`)
@@ -37,8 +37,6 @@ export function install(this: Plugin, ctx: Context) {
       console.log(`keyword`, query);
       const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query));
       const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
-      // DEBUG: console url
-      console.log(`url`, url);
       const searchResult = await fetch(url).then((res) => res.json());
       const answerResult = searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)).join('\n');
       return answerResult;
