@@ -1,0 +1,15 @@
+{
+    "name": "zhin-plugin-tw-qa",
+    "version": "0.0.1",
+    "main": "src/index.ts",
+    "description": "tw-qa plugin",
+    "keywords": [
+        "tw-qa",
+        "plugin",
+        "zhin"
+    ],
+    "scripts": {
+        "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+        "pub": "npm publish --access public"
+    }
+}

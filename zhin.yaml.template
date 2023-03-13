@@ -1,0 +1,32 @@
+port: 8086
+adapters:
+  icqq:
+    bots:
+      - self_id: xxx
+        uin: xxx
+        password: xxx
+        platform: 4
+        master: xxx
+        data_dir: data
+self_url: localhost
+data_dir: data
+plugin_dir: plugins
+plugins:
+  watcher: /Users/linonetwo/Desktop/repo/qq-bot
+log_level: info
+services: {}
+delay:
+  prompt: 60000
+logConfig:
+  appenders:
+    consoleOut:
+      type: console
+    saveFile:
+      type: file
+      filename: /Users/linonetwo/Desktop/repo/qq-bot/logs.log
+  categories:
+    default:
+      appenders:
+        - consoleOut
+        - saveFile
+      level: info

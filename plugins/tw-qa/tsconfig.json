@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "./lib",
+        "rootDir": "./src",
+        "baseUrl": ".",
+        "target": "ES2020",
+        "esModuleInterop": true,
+        "module": "commonjs",
+        "declaration": true
+    },
+    "include": [
+        "./src/"
+    ]
+}

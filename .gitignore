@@ -111,3 +111,7 @@ demo/tiddlers/$__StoryList.tid
 demo/tiddlers/$__layout.tid
 demo/tiddlers/$__Import.tid
 .env.local
+
+
+data/**/*
+zhin.yaml
