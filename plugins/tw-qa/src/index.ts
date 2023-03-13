@@ -2,7 +2,27 @@ import { Plugin, Context } from 'zhin';
 export const name = 'tw-qa';
 
 const WIKI_HOST = 'localhost';
-const WIKI_PORT = 1222;
+const WIKI_PORT = 8081;
+
+const WIKI_URL = `${WIKI_HOST}:${WIKI_PORT}`;
+const searchFilter = '[!is[shadow]!is[system]!field:calendarEntry[yes]search[${query}]]';
+const buildWikiFilter = function (query) {
+  const parts = searchFilter.split('${query}');
+  return `${parts[0]}${query}${parts[1]}`;
+};
+
+function buildAnswerLineFromSearchResultItem(item): string {
+  const title = item.title;
+  const creator = item.creator ? ` @${item.creator}` : '';
+  const modifier = item.modifier ? ` @${item.modifier}` : '';
+  const tags = (item.tags ?? '')
+    .split(' ')
+    .map((tag) => ` #${tag}`)
+    .join(' ');
+  const link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
+  return `${title}${creator}${modifier}${tags}\n${link}`;
+}
+
 export function install(this: Plugin, ctx: Context) {
   // 在这儿实现你的插件逻辑
   // 功能样例：
@@ -11,13 +31,16 @@ export function install(this: Plugin, ctx: Context) {
   ctx
     .command('cn <keyword:text>')
     .shortcut('中文教程')
-    .action(({ session, options }, keyword) => {
-      // DEBUG: console session
-      console.log(`session`, session);
-      console.log('options', options);
+    .action(async ({ session, options }, query) => {
       // DEBUG: console keyword
-      console.log(`keyword`, keyword);
-      return keyword;
+      console.log(`keyword`, query);
+      const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query));
+      const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
+      // DEBUG: console url
+      console.log(`url`, url);
+      const searchResult = await fetch(url).then((res) => res.json());
+      const answerResult = searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)).join('\n');
+      return answerResult;
     });
 
   // 2.定义中间件
