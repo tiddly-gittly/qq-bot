@@ -21,7 +21,7 @@ function buildAnswerLineFromSearchResultItem(item): string {
     .map((tag) => ` #${tag}`)
     .join(' ');
   const link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
-  return `${title}${creator}${modifier}${tags}\n${link}`;
+  return `${title}${tags}${creator}${modifier}\n${link}`;
 }
 
 export function install(this: Plugin, ctx: Context) {
