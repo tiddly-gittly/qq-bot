@@ -20,8 +20,8 @@ function buildAnswerLineFromSearchResultItem(item): string {
     .split(' ')
     .map((tag) => ` #${tag}`)
     .join(' ');
-  const link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
-  return `${title}${tags}${creator}${modifier}\n${link}`;
+  const link = `https://tw-cn.netlify.app/#${title}`;
+  return `${link}\n${tags}${creator}${modifier}`;
 }
 
 export function install(this: Plugin, ctx: Context) {
