@@ -12,7 +12,13 @@ const buildWikiFilter = function (query) {
   return `${parts[0]}${query}${parts[1]}`;
 };
 
-function buildAnswerLineFromSearchResultItem(item): string {
+async function getShortLink(link: string): Promise<string> {
+  const resultJSON = await fetch(`https://api.uomg.com/api/long2dwz?dwzapi=urlcn&url=${link}`).then((res) => res.json());
+  const { ae_url: result } = resultJSON;
+  return result;
+}
+
+async function buildAnswerLineFromSearchResultItem(item): Promise<string> {
   const title = item.title;
   const creator = item.creator ? ` @${item.creator}` : '';
   const modifier = item.modifier && item.modifier !== item.creator ? ` @${item.modifier}` : '';
@@ -20,8 +26,13 @@ function buildAnswerLineFromSearchResultItem(item): string {
     .split(' ')
     .map((tag) => ` #${tag}`)
     .join(' ');
-  const link = `https://tw-cn.netlify.app/#${title}`;
-  return `${link}\n${tags}${creator}${modifier}`;
+  let link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
+  try {
+    link = await getShortLink(link);
+  } catch (error) {
+    console.error(`获取短连接失败 ${error.message}`);
+  }
+  return `${title}${tags}${creator}${modifier}\n${link}`;
 }
 
 export function install(this: Plugin, ctx: Context) {
