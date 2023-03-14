@@ -49,8 +49,8 @@ export function install(this: Plugin, ctx: Context) {
       const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query));
       const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
       const searchResult = await fetch(url).then((res) => res.json());
-      const answerResult = searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)).join('\n');
-      return answerResult;
+      const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)));
+      return answerResult.join('\n');
     });
 
   // 2.定义中间件
