@@ -24,6 +24,8 @@ async function buildAnswerLineFromSearchResultItem(item): Promise<string> {
   const modifier = item.modifier && item.modifier !== item.creator ? ` @${item.modifier}` : '';
   const tags = (item.tags ?? '')
     .split(' ')
+    .filter(item => item)
+    .filter(item => !item.startsWith('$:/'))
     .map((tag) => ` #${tag}`)
     .join(' ');
   let link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
