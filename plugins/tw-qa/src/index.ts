@@ -5,8 +5,8 @@ const WIKI_HOST = 'localhost';
 const WIKI_PORT = 8081;
 
 const WIKI_URL = `${WIKI_HOST}:${WIKI_PORT}`;
-// http://192.168.3.17:8081/recipes/default/tiddlers.json?filter=[!is[shadow]!is[system]!field%3AcalendarEntry[yes]search:title,caption,text:words[CPL]!sort[modified]first[10]]
-const searchFilter = '[!is[shadow]!is[system]susearch-sort:title,caption,text:raw-strip[${query}]first[10]]';
+// http://192.168.3.17:8081/recipes/default/tiddlers.json?filter=[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[git]first[10]]
+const searchFilter = '[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[${query}]first[5]]';
 const buildWikiFilter = function (query) {
   const parts = searchFilter.split('${query}');
   return `${parts[0]}${query}${parts[1]}`;
