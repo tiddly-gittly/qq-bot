@@ -17,9 +17,14 @@ const buildWikiFilter = function (query, count = 5, pagination = 1) {
     .replace('${count}', String(count));
 };
 
+const shortLinkCache = {};
 async function getShortLink(link: string): Promise<string> {
+  if (shortLinkCache[link]) {
+    return shortLinkCache[link];
+  }
   const resultJSON = await fetch(`https://api.uomg.com/api/long2dwz?dwzapi=urlcn&url=${encodeURIComponent(link)}`).then((res) => res.json());
   const { ae_url: result } = resultJSON;
+  shortLinkCache[link] = result;
   return result;
 }
 
@@ -54,7 +59,7 @@ export function install(this: Plugin, ctx: Context) {
     .shortcut('中文教程')
     .action(async ({ session, options }, query) => {
       const { count = 5, pagination = 1 } = options ?? {};
-      const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query));
+      const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query, count, pagination));
       const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
       const searchResult = await fetch(url).then((res) => res.json());
       const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)));
