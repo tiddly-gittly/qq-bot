@@ -6,10 +6,15 @@ const WIKI_PORT = 8081;
 
 const WIKI_URL = `${WIKI_HOST}:${WIKI_PORT}`;
 // http://192.168.3.17:8081/recipes/default/tiddlers.json?filter=[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[git]first[10]]
-const searchFilter = '[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[${query}]first[5]]';
-const buildWikiFilter = function (query) {
-  const parts = searchFilter.split('${query}');
-  return `${parts[0]}${query}${parts[1]}`;
+const searchFilter = '[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[${query}]${filter}]';
+const buildWikiFilter = function (query, count = 5, pagination = 1) {
+  // starts at page 1
+  const paginationTimesCount = Math.max((pagination - 1) * count, 0);
+  return searchFilter
+    .replace('${query}', query)
+    .replace('${filter}', 'rest[${paginationTimesCount}]first[${count}]')
+    .replace('${paginationTimesCount}', String(paginationTimesCount))
+    .replace('${count}', String(count));
 };
 
 async function getShortLink(link: string): Promise<string> {
@@ -24,8 +29,8 @@ async function buildAnswerLineFromSearchResultItem(item): Promise<string> {
   const modifier = item.modifier && item.modifier !== item.creator ? ` @${item.modifier}` : '';
   const tags = (item.tags ?? '')
     .split(' ')
-    .filter(item => item)
-    .filter(item => !item.startsWith('$:/'))
+    .filter((item) => item)
+    .filter((item) => !item.startsWith('$:/'))
     .map((tag) => ` #${tag}`)
     .join(' ');
   let link = `https://tw-cn.netlify.app/#${encodeURIComponent(title)}`;
@@ -44,13 +49,22 @@ export function install(this: Plugin, ctx: Context) {
 
   ctx
     .command('cn <keyword:text>')
+    .option('count', '-c <count:number>')
+    .option('pagination', '-p <pagination:number>')
     .shortcut('中文教程')
     .action(async ({ session, options }, query) => {
+      const { count = 5, pagination = 1 } = options ?? {};
       const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query));
       const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
       const searchResult = await fetch(url).then((res) => res.json());
       const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item)));
-      return answerResult.join('\n');
+
+      let paginationTutorial = '';
+      if (answerResult.length === count) {
+        // means maybe we have more results, teach user how to do pagination
+        paginationTutorial = `\n\n通过 cn ${query} -p ${pagination + 1} 查看更多结果，或 -c 10 来增加返回量`;
+      }
+      return `${answerResult.join('\n')}${paginationTutorial}`;
     });
 
   // 2.定义中间件
