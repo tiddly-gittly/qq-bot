@@ -58,7 +58,7 @@ export function install(this: Plugin, ctx: Context) {
     .option('pagination', '-p <pagination:number>')
     .shortcut('中文教程')
     .action(async ({ session, options }, query) => {
-      const { count = 5, pagination = 1 } = options ?? {};
+      const { count = 6, pagination = 1 } = options ?? {};
       const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query, count, pagination));
       const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
       const searchResult = await fetch(url).then((res) => res.json());
