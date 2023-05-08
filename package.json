@@ -11,7 +11,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "zhin": "2.0.3-18"
+        "zhin": "2.0.6"
     },
     "devDependencies": {
         "@types/koa": "^2.13.5",
