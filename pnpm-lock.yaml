@@ -2,11 +2,11 @@ lockfileVersion: '6.0'
 
 dependencies:
   icqq:
-    specifier: ^0.3.12
+    specifier: latest
     version: 0.3.12
   zhin:
     specifier: 2.0.7
-    version: 2.0.7(icqq@0.3.12)
+    version: 2.0.7
 
 devDependencies:
   '@types/koa':
@@ -1303,7 +1303,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: false
 
-  /zhin@2.0.7(icqq@0.3.12):
+  /zhin@2.0.7:
     resolution: {integrity: sha512-0afrxAPfBTJzpCKDN1Z2OGU1dhsxF3s0CtpE9FT34oKmgqpFZ6g8xz3rtjJWBqMJPBDGo2y/A/GlFLUMdz28/A==}
     hasBin: true
     peerDependencies:
@@ -1316,7 +1316,6 @@ packages:
       chokidar: 3.5.3
       esbuild: 0.15.18
       esbuild-register: 3.4.2(esbuild@0.15.18)
-      icqq: 0.3.12
       js-yaml: 4.1.0
       koa: 2.14.1
       koa-bodyparser: 4.3.0

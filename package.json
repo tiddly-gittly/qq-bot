@@ -1,23 +1,25 @@
 {
-    "name": "@linonetwo012/tw-qq-bot",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "start-zhin",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "icqq": "^0.3.12",
-        "zhin": "2.0.7"
-    },
-    "devDependencies": {
-        "@types/koa": "^2.13.5",
-        "tsc-alias": "^1.8.2",
-        "tsconfig-paths": "^4.1.2",
-        "typescript": "^4.9.5"
-    }
+  "name": "@linonetwo012/tw-qq-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "start-zhin",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zhin": "2.0.7"
+  },
+  "peerDependencies": {
+    "icqq": "*"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "tsc-alias": "^1.8.2",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^4.9.5"
+  }
 }
