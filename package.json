@@ -11,8 +11,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "icqq": "^0.3.2",
-        "zhin": "2.0.6"
+        "icqq": "^0.3.12",
+        "zhin": "2.0.7"
     },
     "devDependencies": {
         "@types/koa": "^2.13.5",

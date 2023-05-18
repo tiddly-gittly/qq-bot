@@ -2,11 +2,11 @@ lockfileVersion: '6.0'
 
 dependencies:
   icqq:
-    specifier: ^0.3.2
-    version: 0.3.2
+    specifier: ^0.3.12
+    version: 0.3.12
   zhin:
-    specifier: 2.0.6
-    version: 2.0.6(icqq@0.3.2)
+    specifier: 2.0.7
+    version: 2.0.7(icqq@0.3.12)
 
 devDependencies:
   '@types/koa':
@@ -794,8 +794,8 @@ packages:
       safer-buffer: 2.1.2
     dev: false
 
-  /icqq@0.3.2:
-    resolution: {integrity: sha512-MLeHCv8CzK/1KQtxSA9NrsEwWtuludWmTYJLS+ODRpSXng4YrDzzTRm88hwmLNf2ZICqLv9CpY+kzQEaJ+Q/EA==}
+  /icqq@0.3.12:
+    resolution: {integrity: sha512-iYhEzompsp4df5roo1ZSUbJBXkg8Kj71F0jUlZRqrdktFCxUKwi1Vlp94PnRAEoGN+hz1W4Y6SIW6SegiAxmWA==}
     engines: {node: '>= v14'}
     dependencies:
       axios: 1.3.4
@@ -1303,8 +1303,8 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: false
 
-  /zhin@2.0.6(icqq@0.3.2):
-    resolution: {integrity: sha512-iPTBt7Gj9PXJHh+cU7eCvpjEi2as+mCCbEWiIhUDMc0S7pPPfthvkaIYV5AorZI+v5bZVfuPOlObRwdtozP16g==}
+  /zhin@2.0.7(icqq@0.3.12):
+    resolution: {integrity: sha512-0afrxAPfBTJzpCKDN1Z2OGU1dhsxF3s0CtpE9FT34oKmgqpFZ6g8xz3rtjJWBqMJPBDGo2y/A/GlFLUMdz28/A==}
     hasBin: true
     peerDependencies:
       icqq: latest
@@ -1316,7 +1316,7 @@ packages:
       chokidar: 3.5.3
       esbuild: 0.15.18
       esbuild-register: 3.4.2(esbuild@0.15.18)
-      icqq: 0.3.2
+      icqq: 0.3.12
       js-yaml: 4.1.0
       koa: 2.14.1
       koa-bodyparser: 4.3.0

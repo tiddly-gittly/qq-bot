@@ -2,7 +2,7 @@ import { Plugin, Context } from 'zhin';
 export const name = 'tw-qa';
 
 const WIKI_HOST = 'localhost';
-const WIKI_PORT = 8081;
+const WIKI_PORT = 5213;
 
 const WIKI_URL = `${WIKI_HOST}:${WIKI_PORT}`;
 // http://192.168.3.17:8081/recipes/default/tiddlers.json?filter=[!is[shadow]!is[system]field:type[text/vnd.tiddlywiki]susearch-sort:title,caption,text:raw-strip[git]first[10]]
