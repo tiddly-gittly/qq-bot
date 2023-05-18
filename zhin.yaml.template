@@ -3,7 +3,6 @@ adapters:
   icqq:
     bots:
       - self_id: xxx
-        uin: xxx
         password: xxx
         platform: 4
         master: xxx
