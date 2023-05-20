@@ -1,4 +1,6 @@
 import { Plugin, Context } from 'zhin';
+import fs from 'fs';
+import path from 'path';
 export const name = 'tw-qa';
 
 const WIKI_HOST = 'localhost';
@@ -17,7 +19,9 @@ const buildWikiFilter = function (query, count = 5, pagination = 1) {
     .replace('${count}', String(count));
 };
 
-const shortLinkCache = {};
+const projectRootPath = path.join(__dirname, '..', '..', '..');
+const shortLinkCachePath = path.join(projectRootPath, 'data', 'shortLinkCache.json');
+const shortLinkCache = fs.existsSync(shortLinkCachePath) ? JSON.parse(fs.readFileSync(shortLinkCachePath, 'utf-8')) : {};
 async function getShortLink(link: string): Promise<string> {
   if (shortLinkCache[link]) {
     return shortLinkCache[link];
@@ -26,6 +30,9 @@ async function getShortLink(link: string): Promise<string> {
   const { ae_url: result } = resultJSON;
   shortLinkCache[link] = result;
   return result;
+}
+function saveShortLinkCache() {
+  fs.writeFileSync(shortLinkCachePath, JSON.stringify(shortLinkCache));
 }
 
 async function buildAnswerLineFromSearchResultItem(item): Promise<string> {
@@ -69,6 +76,7 @@ export function install(this: Plugin, ctx: Context) {
         // means maybe we have more results, teach user how to do pagination
         paginationTutorial = `\n\n通过 cn ${query} -p ${pagination + 1} 查看更多结果，或 -c 10 来增加返回量`;
       }
+      saveShortLinkCache();
       return `${answerResult.join('\n')}${paginationTutorial}`;
     });
 
