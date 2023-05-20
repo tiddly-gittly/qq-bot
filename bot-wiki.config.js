@@ -16,13 +16,14 @@ module.exports = {
   apps: [
     {
       name: 'qq-bot',
-      // script: 'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+      script: 'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
       // instances: 1,
       // exec_mode: 'cluster',
-      script: 'npm',
-      args: 'run start',
+      // script: 'npx',
+      args: 'start',
       cwd: 'D:/repo/qq-bot',
-      interpreter: process.platform === 'win32' && 'C:\\Windows\\System32\\cmd.exe',
+      // interpreter: process.platform === 'win32' && 'C:\\Program Files\\PowerShell\\7\\pwsh.exe',
+      // interpreter: process.platform === 'win32' && 'C:\\Windows\\System32\\cmd.exe',
     },
     // on windows, this is started by TidGi
     // ...wikiDirs.flatMap(({ name, wikiDir }, index) => [
