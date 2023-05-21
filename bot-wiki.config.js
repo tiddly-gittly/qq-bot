@@ -22,6 +22,7 @@ module.exports = {
       // script: 'npx',
       args: 'start',
       cwd: 'D:/repo/qq-bot',
+      autorestart: false,
       // interpreter: process.platform === 'win32' && 'C:\\Program Files\\PowerShell\\7\\pwsh.exe',
       // interpreter: process.platform === 'win32' && 'C:\\Windows\\System32\\cmd.exe',
     },
