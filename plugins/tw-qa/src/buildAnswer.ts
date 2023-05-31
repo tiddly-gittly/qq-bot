@@ -19,7 +19,7 @@ export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, 
   } catch (error) {
     console.error(`获取短连接失败 ${error.message}`);
   }
-  return `# ${caption}${tags}${creator}${modifier}\n${link}`;
+  return `# ${caption}${tagsString}${creator}${modifier}\n${link}`;
 }
 
 export async function answerQuestionSearchWiki(
