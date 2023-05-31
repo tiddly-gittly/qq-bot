@@ -2,7 +2,7 @@ import { buildWikiFilter } from './filter';
 import { getShortLink, saveShortLinkCache } from './shortLink';
 import { ITiddlerFields } from 'tw5-typed';
 
-export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, website: string): Promise<string> {
+export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, website: string, params: { hashPrefix: boolean },): Promise<string> {
   const caption = item.caption ?? item.title;
   const title = item.title;
   const creator = item.creator ? ` @${item.creator}` : '';
@@ -13,17 +13,17 @@ export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, 
     .filter((item) => !item.startsWith('$:/'))
     .map((tag) => ` #${tag}`)
     .join(' ');
-  let link = `${website}#${encodeURIComponent(title)}`;
+  let link = `${website}${params.hashPrefix ? '#' : ''}${encodeURIComponent(title)}`;
   try {
     link = await getShortLink(link);
   } catch (error) {
     console.error(`获取短连接失败 ${error.message}`);
   }
-  return `# ${caption}${tags}${creator}${modifier}\n[[ ${link} ]]`;
+  return `# ${caption}${tags}${creator}${modifier}\n${link}`;
 }
 
 export async function answerQuestionSearchWiki(
-  params: { WIKI_URL: string; query: string; command: string; name: string; website: string },
+  params: { WIKI_URL: string; query: string; command: string; name: string; website: string, hashPrefix: boolean },
   options?: { count?: number; pagination?: number },
 ) {
   const { count = 6, pagination = 1 } = options ?? {};
@@ -34,7 +34,7 @@ export async function answerQuestionSearchWiki(
   try {
     console.log(`请求地址：${url}  filter: ${filter}`);
     const searchResult: ITiddlerFields[] = await fetch(url).then((res) => res.json());
-    const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item, website)));
+    const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item, website, params)));
 
     let paginationTutorial = '';
     if (answerResult.length === count) {
@@ -42,9 +42,9 @@ export async function answerQuestionSearchWiki(
       paginationTutorial = `> 通过 ${command} ${query} -p ${pagination + 1} 查看更多结果，或 -c ${count * 2} 来增加返回量`;
     }
     void saveShortLinkCache();
-    return `! ${name}
-${answerResult.join('\n')}
-${paginationTutorial}`;
+    return `${answerResult.join('\n')}
+${paginationTutorial}
+${name} 搜索完毕，欢迎下次光临`;
   } catch (error) {
     const errorMessage = `! ${name}搜索失败
 

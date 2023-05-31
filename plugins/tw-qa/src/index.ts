@@ -9,14 +9,17 @@ const wikis = [
     name: '中文教程',
     WIKI_HOST: 'localhost',
     WIKI_PORT: 5213,
-    website: 'https://tw-cn.netlify.app/'
+    website: 'https://tw-cn.cpolar.top/',
+    // nodejs wiki, can use single tiddler view
+    hashPrefix: false,
   },
   {
     command: 'doc',
     name: '官方文档',
     WIKI_HOST: 'localhost',
     WIKI_PORT: 5215,
-    website: 'https://bramchen.github.io/tw5-docs/zh-Hans/'
+    website: 'https://tw-cn-doc.cpolar.top/',
+    hashPrefix: false,
   },
 ];
 
@@ -41,6 +44,20 @@ export function install(this: Plugin, ctx: Context) {
         return result;
       });
   });
+
+  ctx
+    .command(`usage`)
+    .shortcut('机器人用法')
+    .action(async ({ session, options }, query) => {
+      const result = `可用的知识库：
+
+| ${'名称'.padEnd(5, '　')} | ${'指令'}
+${wikis.map((wiki) => `| ${wiki.name.padEnd(5, '　')} | ${wiki.command}`).join('\n')}
+
+使用方法例如在聊天框发送 \`${wikis[0].command} 同步\` 就可以在${wikis[0].name}知识库搜索同步相关的内容
+`;
+      return result;
+    });
 
   // 2.定义中间件
   /*
