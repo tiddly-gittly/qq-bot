@@ -20,7 +20,7 @@ module.exports = {
       // instances: 1,
       // exec_mode: 'cluster',
       // script: 'npx',
-      args: 'start',
+      args: 'start --offline --logs-max=0',
       cwd: 'D:/repo/qq-bot',
       autorestart: false,
       // interpreter: process.platform === 'win32' && 'C:\\Program Files\\PowerShell\\7\\pwsh.exe',
