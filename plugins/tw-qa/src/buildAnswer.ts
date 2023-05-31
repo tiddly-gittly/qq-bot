@@ -28,9 +28,11 @@ export async function answerQuestionSearchWiki(
 ) {
   const { count = 6, pagination = 1 } = options ?? {};
   const { WIKI_URL, query, command, name, website } = params ?? {};
-  const urlEncodedQuery = encodeURIComponent(buildWikiFilter(query, count, pagination));
+  const filter = buildWikiFilter(query, count, pagination);
+  const urlEncodedQuery = encodeURIComponent(filter);
   const url = `http://${WIKI_URL}/recipes/default/tiddlers.json?filter=${urlEncodedQuery}`;
   try {
+    console.log(`请求地址：${url}  filter: ${filter}`);
     const searchResult: ITiddlerFields[] = await fetch(url).then((res) => res.json());
     const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item, website)));
 
