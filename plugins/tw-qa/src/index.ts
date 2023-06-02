@@ -21,7 +21,24 @@ const wikis = [
     website: 'https://tw-cn-doc.cpolar.top/',
     hashPrefix: false,
   },
+  {
+    command: 'tidgi',
+    name: '太记官网',
+    WIKI_HOST: 'localhost',
+    WIKI_PORT: 5216,
+    website: 'https://tidgi.fun/',
+    hashPrefix: true,
+  },
+  {
+    command: 'onetwo',
+    name: '林一二的博客',
+    WIKI_HOST: 'localhost',
+    WIKI_PORT: 5217,
+    website: 'https://wiki.onetwo.ren/',
+    hashPrefix: false,
+  },
 ];
+const padNameLength = [...wikis].sort((a, b) => b.name.length - a.name.length)[0].name.length;
 
 export function install(this: Plugin, ctx: Context) {
   // 在这儿实现你的插件逻辑
@@ -51,8 +68,8 @@ export function install(this: Plugin, ctx: Context) {
     .action(async ({ session, options }, query) => {
       const result = `可用的知识库：
 
-| ${'名称'.padEnd(5, '　')} | ${'指令'}
-${wikis.map((wiki) => `| ${wiki.name.padEnd(5, '　')} | ${wiki.command}`).join('\n')}
+| ${'名称'.padEnd(padNameLength, '　')} | ${'指令'}
+${wikis.map((wiki) => `| ${wiki.name.padEnd(padNameLength, '　')} | ${wiki.command}`).join('\n')}
 
 使用方法例如在聊天框发送 \`${wikis[0].command} 同步\` 就可以在${wikis[0].name}知识库搜索同步相关的内容
 `;
