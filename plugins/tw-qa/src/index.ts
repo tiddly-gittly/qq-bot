@@ -11,7 +11,7 @@ const wikis = [
     WIKI_PORT: 5213,
     website: 'https://tw-cn.cpolar.top/',
     // nodejs wiki, can use single tiddler view
-    hashPrefix: false,
+    hashPrefix: true,
   },
   {
     command: 'doc',
