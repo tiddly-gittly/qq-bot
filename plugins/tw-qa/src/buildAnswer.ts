@@ -1,6 +1,7 @@
 import { buildWikiFilter } from './filter';
 import { getShortLink, saveShortLinkCache } from './shortLink';
 import { ITiddlerFields } from 'tw5-typed';
+import { filter as sensitiveWordsFilter } from 'sensitive-words-js';
 
 export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, website: string, params: { hashPrefix: boolean },): Promise<string> {
   const caption = item.caption ?? item.title;
@@ -19,7 +20,7 @@ export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, 
   } catch (error) {
     console.error(`获取短连接失败 ${error.message}`);
   }
-  return `# ${caption}${tagsString}${creator}${modifier}\n${link}`;
+  return `# ${sensitiveWordsFilter.filter(`${caption}${tagsString}${creator}${modifier}`).text}\n${link}`;
 }
 
 export async function answerQuestionSearchWiki(
