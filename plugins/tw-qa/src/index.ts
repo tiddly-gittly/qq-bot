@@ -37,6 +37,14 @@ const wikis = [
     website: 'https://wiki.onetwo.ren/',
     hashPrefix: false,
   },
+  {
+    command: 'cpl',
+    name: '中文插件源',
+    WIKI_HOST: 'localhost',
+    WIKI_PORT: 5218,
+    website: 'https://tw-cpl.cpolar.top/',
+    hashPrefix: false,
+  },
 ];
 const padNameLength = [...wikis].sort((a, b) => b.name.length - a.name.length)[0].name.length;
 
@@ -48,12 +56,12 @@ export function install(this: Plugin, ctx: Context) {
   wikis.forEach((wiki) => {
     const { command, name, WIKI_HOST, WIKI_PORT } = wiki;
     ctx
-      .command(`${command} <keyword:text>`)
-      .option('count', '-c <count:number>')
-      .option('pagination', '-p <pagination:number>')
-      .shortcut(name)
+      .command(`${command} <keyword:string>`)
+      .option('-c [count:number]')
+      .option('-p [pagination:number]')
+      .sugar(name)
       .action(async ({ session, options }, query) => {
-        const queryString = query[0].attrs.text;
+        const queryString = query;
 
         const WIKI_URL = `${WIKI_HOST}:${WIKI_PORT}`;
 
@@ -64,7 +72,7 @@ export function install(this: Plugin, ctx: Context) {
 
   ctx
     .command(`usage`)
-    .shortcut('机器人用法')
+    .sugar('机器人用法')
     .action(async ({ session, options }, query) => {
       const result = `可用的知识库：
 

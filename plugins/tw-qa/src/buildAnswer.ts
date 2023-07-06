@@ -35,6 +35,9 @@ export async function answerQuestionSearchWiki(
   try {
     console.log(`请求地址：${url}  filter: ${filter}`);
     const searchResult: ITiddlerFields[] = await fetch(url).then((res) => res.json());
+    if (searchResult.length === 0) {
+      console.log(`搜索结果为空 ${url}`);
+    }
     const answerResult = await Promise.all<string>(searchResult.map((item) => buildAnswerLineFromSearchResultItem(item, website, params)));
 
     let paginationTutorial = '';
