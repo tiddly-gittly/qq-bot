@@ -1,7 +1,9 @@
 import { buildWikiFilter } from './filter';
 import { getShortLink, saveShortLinkCache } from './shortLink';
 import { ITiddlerFields } from 'tw5-typed';
-import { filter as sensitiveWordsFilter } from 'sensitive-words-js';
+import { zhCN } from 'sensitive-words-js';
+import Mint from 'mint-filter'
+const sensitiveWordsFilter = new Mint(zhCN, { customCharacter: '█' })
 
 export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, website: string, params: { hashPrefix: boolean },): Promise<string> {
   const caption = item.caption ?? item.title;

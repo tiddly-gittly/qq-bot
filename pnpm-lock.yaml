@@ -11,6 +11,9 @@ dependencies:
   icqq:
     specifier: ^0.4.8
     version: registry.npmmirror.com/icqq@0.4.8
+  mint-filter:
+    specifier: ^4.0.3
+    version: registry.npmmirror.com/mint-filter@4.0.3
   sensitive-words-js:
     specifier: ^1.0.4
     version: registry.npmjs.org/sensitive-words-js@1.0.4
