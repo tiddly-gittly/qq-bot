@@ -43,7 +43,7 @@ const wikis = [
     WIKI_HOST: 'localhost',
     WIKI_PORT: 5218,
     website: 'https://tw-cpl.cpolar.top/',
-    hashPrefix: false,
+    hashPrefix: true,
   },
 ];
 const padNameLength = [...wikis].sort((a, b) => b.name.length - a.name.length)[0].name.length;
