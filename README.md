@@ -15,4 +15,8 @@ QQ 群：946052860
 
 ## 注册签名服务
 
-http://localhost:8080/register?uin=&android_id=&guid=1&qimei36=&key=114514
+https://github.com/rhwong/unidbg-fetch-qsign-onekey
+
+http://localhost:13579/register?uin=1287688945&android_id=b53d796ce5b02f&guid=2285&qimei36=817fccb0be417f858415fd54100014e17706&key=1145141919810
+
+android_id guid qimei36 从device文件夹取得，key 在启动 unidbg-fetch-qsign-onekey 时会log出
