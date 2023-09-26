@@ -45,6 +45,14 @@ const wikis = [
     website: 'https://tw-cpl.cpolar.top/',
     hashPrefix: true,
   },
+  {
+    command: 'memo',
+    name: '学习理论汉化文章',
+    WIKI_HOST: 'localhost',
+    WIKI_PORT: 5219,
+    website: 'https://dongrentianyu.github.io/memo/',
+    hashPrefix: true,
+  },
 ];
 const padNameLength = [...wikis].sort((a, b) => b.name.length - a.name.length)[0].name.length;
 
