@@ -6,7 +6,7 @@ import Mint from 'mint-filter'
 const sensitiveWordsFilter = new Mint(zhCN, { customCharacter: '█' })
 
 export async function buildAnswerLineFromSearchResultItem(item: ITiddlerFields, website: string, params: { hashPrefix: boolean },): Promise<string> {
-  const caption = item.caption ?? item.title;
+  const caption = (item.caption as string ?? item.title ?? item['original-title'] as string ?? '').replace(/[\r\n\s]/g, '');
   const title = item.title;
   const creator = item.creator ? ` @${item.creator}` : '';
   const modifier = item.modifier && item.modifier !== item.creator ? ` @${item.modifier}` : '';
